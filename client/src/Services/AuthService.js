@@ -6,9 +6,11 @@ export default {
       headers: {
         "Content-Type": "application/json",
       },
-    })
-      .then((res) => res.json())
-      .then((data) => data);
+    }).then((res) => {
+      if (res.status !== 401) return res.json().then((data) => data);
+
+      return { isAuthenticated: false, user: { username: "", role: "" } };
+    });
   },
   register: (user) => {
     return fetch("/user/register", {
@@ -23,9 +25,7 @@ export default {
   },
   logout: () => {
     return fetch("/user/logout")
-      .then((res) => {
-        res.json();
-      })
+      .then((res) => res.json())
       .then((data) => data);
   },
   isAuthenticated: () => {

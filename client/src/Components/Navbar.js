@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import AuthService from "../Services/AuthService";
 import { AuthContext } from "../Context/AuthContext";
-import { authenticate } from "passport";
 
 const Navbar = (props) => {
   const { isAuthenticated, user, setIsAuthenticated, setUser } = useContext(
@@ -11,6 +10,7 @@ const Navbar = (props) => {
 
   const onClickLogoutHandler = () => {
     AuthService.logout().then((data) => {
+      // console.log(data)
       if (data.success) {
         setUser(data.user);
         setIsAuthenticated(false);
